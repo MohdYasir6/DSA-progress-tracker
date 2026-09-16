@@ -1,20 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import "./App.css";
 
 function App() {
   const [problems, setProblems] = useState([]);
-
+  const isFirstLoad = useRef(true);
   const [name, setName] = useState("");
   const [pattern, setPattern] = useState("Array");
   const [difficulty, setDifficulty] = useState("Easy");
   const [dateSolved, setDateSolved] = useState("");
-
+  useEffect(() => {
+    const saved = localStorage.getItem("problems");
+    if (saved) {
+      setProblems(JSON.parse(saved));
+    }
+  }, []);
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false; // pehli baar hai, isliye save MAT karo, bas flag change karo
+      return;
+    }
+    localStorage.setItem("problems", JSON.stringify(problems));
+  }, [problems]);
   function handleAddButton(e) {
     e.preventDefault();
 
     if (name.trim() === "") {
       alert("enter your problem name");
+      return;
+    }
+    if (dateSolved === "") {
+      alert("enter the date solved");
       return;
     }
     const newProblem = {
@@ -26,6 +42,9 @@ function App() {
     };
 
     setProblems([...problems, newProblem]);
+  }
+  function handleDelete(id) {
+    setProblems(problems.filter((p) => p.id !== id));
   }
   return (
     <div>
@@ -61,6 +80,7 @@ function App() {
       </form>
       {problems.map((p) => (
         <div key={p.id}>
+          <button onClick={() => handleDelete(p.id)}>Delete</button>
           <p>{p.name}</p>
           <p>
             {p.pattern}-{p.difficulty}
