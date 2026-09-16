@@ -54,6 +54,15 @@ function App() {
 
         <button type="submit">Add</button>
       </form>
+      {problems.map((p) => (
+        <div key={p.id}>
+          <p>{p.name}</p>
+          <p>
+            {p.pattern}-{p.difficulty}
+          </p>
+          <p>{p.dateSolved}</p>
+        </div>
+      ))}
     </div>
   );
 }
