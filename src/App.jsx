@@ -12,6 +12,11 @@ function App() {
 
   function handleAddButton(e) {
     e.preventDefault();
+
+    if (name.trim() === "") {
+      alert("enter your problem name");
+      return;
+    }
     const newProblem = {
       id: Date.now(),
       name: name,
