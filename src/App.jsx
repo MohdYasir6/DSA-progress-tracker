@@ -9,6 +9,7 @@ function App() {
   const [pattern, setPattern] = useState("Array");
   const [difficulty, setDifficulty] = useState("Easy");
   const [dateSolved, setDateSolved] = useState("");
+
   useEffect(() => {
     const saved = localStorage.getItem("problems");
     if (saved) {
@@ -39,12 +40,33 @@ function App() {
       pattern: pattern,
       difficulty: difficulty,
       dateSolved: dateSolved,
+      lastRevised: dateSolved,
     };
 
     setProblems([...problems, newProblem]);
   }
   function handleDelete(id) {
     setProblems(problems.filter((p) => p.id !== id));
+  }
+  function getDaysSince(dateSolved) {
+    const solved = new Date(dateSolved); // dateSolved is in inout string
+    const today = new Date();
+    const diffInMs = today - solved;
+    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    return diffInDays;
+  }
+
+  function getDueForRivision() {
+    return problems.filter((p) => {
+      const days = getDaysSince(p.lastRevised);
+      return days === 1 || days === 3 || days === 7;
+    });
+  }
+  function handleMarkRevised(id) {
+    const today = new Date().toISOString().split("T")[0];
+    setProblems(
+      problems.map((p) => (p.id === id ? { ...p, lastRevised: today } : p)),
+    );
   }
   return (
     <div>
@@ -88,6 +110,22 @@ function App() {
           <p>{p.dateSolved}</p>
         </div>
       ))}
+      {getDueForRivision().length > 0 && (
+        <div>
+          <h3>Due For Rivision Today</h3>
+          {getDueForRivision().map((p) => (
+            <div key={p.id}>
+              <p>{p.name}</p>
+              <p>
+                Solved: {p.dateSolved} ({getDaysSince(p.lastRevised)} days ago)
+              </p>
+              <button onClick={() => handleMarkRevised(p.id)}>
+                Mark as Revised
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
