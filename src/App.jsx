@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-
+import ProblemItem from "./components/ProblemItem";
 import "./App.css";
 
 function App() {
@@ -133,14 +133,7 @@ function App() {
       </select>
 
       {filteredProblems.map((p) => (
-        <div key={p.id}>
-          <button onClick={() => handleDelete(p.id)}>Delete</button>
-          <p>{p.name}</p>
-          <p>
-            {p.pattern}-{p.difficulty}
-          </p>
-          <p>{p.dateSolved}</p>
-        </div>
+        <ProblemItem key={p.id} problem={p} onDelete={handleDelete} />
       ))}
       {getDueForRivision().length > 0 && (
         <div>
