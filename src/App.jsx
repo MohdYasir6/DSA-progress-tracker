@@ -3,6 +3,8 @@ import ProblemItem from "./components/ProblemItem";
 import "./App.css";
 import ReviseBox from "./components/ReviseBox";
 import AddProblemForm from "./components/AddProblemForm";
+import FilterDropdown from "./components/FilterDropdown";
+
 function App() {
   const [problems, setProblems] = useState([]);
   const isFirstLoad = useRef(true);
@@ -95,17 +97,11 @@ function App() {
         setCustomPattern={setCustomPattern}
         onSubmit={handleAddButton}
       />
-      <select
-        value={filterPattern}
-        onChange={(e) => setFilterPattern(e.target.value)}
-      >
-        <option value="All">All</option>
-        {uniquePatterns.map((pat) => (
-          <option key={pat} value={pat}>
-            {pat}
-          </option>
-        ))}
-      </select>
+      <FilterDropdown
+        filterPattern={filterPattern}
+        setFilterPattern={setFilterPattern}
+        uniquePatterns={uniquePatterns}
+      />
 
       {filteredProblems.map((p) => (
         <ProblemItem key={p.id} problem={p} onDelete={handleDelete} />
