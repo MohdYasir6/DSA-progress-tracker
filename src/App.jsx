@@ -97,6 +97,11 @@ function App() {
         setCustomPattern={setCustomPattern}
         onSubmit={handleAddButton}
       />
+      <ReviseBox
+        dueProblems={getDueForRivision()}
+        getDaysSince={getDaysSince}
+        onMarkRevised={handleMarkRevised}
+      />
       <FilterDropdown
         filterPattern={filterPattern}
         setFilterPattern={setFilterPattern}
@@ -106,11 +111,6 @@ function App() {
       {filteredProblems.map((p) => (
         <ProblemItem key={p.id} problem={p} onDelete={handleDelete} />
       ))}
-      <ReviseBox
-        dueProblems={getDueForRivision()}
-        getDaysSince={getDaysSince}
-        onMarkRevised={handleMarkRevised}
-      />
     </div>
   );
 }

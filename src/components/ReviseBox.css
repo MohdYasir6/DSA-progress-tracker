@@ -1,0 +1,65 @@
+.revise-box {
+  width: 80%;
+  max-width: 500px;
+  margin: 16px auto;
+  background: #3a2416;
+  border-left: 5px solid #ef9f27;
+  border-radius: 8px;
+  padding: 10px 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.revise-title {
+  color: #fac775;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.revise-item {
+  background: #241111;
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-bottom: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.revise-item:last-child {
+  margin-bottom: 0;
+}
+
+.revise-info p {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.revise-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.revise-meta {
+  font-size: 11px;
+  color: #cccccc;
+}
+
+.revise-btn {
+  background: #639922;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.revise-btn:hover {
+  background: #4d7a1a;
+}
