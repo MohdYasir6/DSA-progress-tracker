@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import ProblemItem from "./components/ProblemItem";
 import "./App.css";
-
+import ReviseBox from "./components/ReviseBox";
 function App() {
   const [problems, setProblems] = useState([]);
   const isFirstLoad = useRef(true);
@@ -135,22 +135,11 @@ function App() {
       {filteredProblems.map((p) => (
         <ProblemItem key={p.id} problem={p} onDelete={handleDelete} />
       ))}
-      {getDueForRivision().length > 0 && (
-        <div>
-          <h3>Due For Rivision Today</h3>
-          {getDueForRivision().map((p) => (
-            <div key={p.id}>
-              <p>{p.name}</p>
-              <p>
-                Solved: {p.dateSolved} ({getDaysSince(p.lastRevised)} days ago)
-              </p>
-              <button onClick={() => handleMarkRevised(p.id)}>
-                Mark as Revised
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
+      <ReviseBox
+        dueProblems={getDueForRivision()}
+        getDaysSince={getDaysSince}
+        onMarkRevised={handleMarkRevised}
+      />
     </div>
   );
 }
