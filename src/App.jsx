@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import ProblemItem from "./components/ProblemItem";
 import "./App.css";
 import ReviseBox from "./components/ReviseBox";
+import AddProblemForm from "./components/AddProblemForm";
 function App() {
   const [problems, setProblems] = useState([]);
   const isFirstLoad = useRef(true);
@@ -81,45 +82,19 @@ function App() {
   const uniquePatterns = [...new Set(problems.map((p) => p.pattern))];
   return (
     <div>
-      <form onSubmit={handleAddButton}>
-        <input // input name ke liye
-          type="text"
-          placeholder="Enter Problem Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        ></input>
-        <select value={pattern} onChange={(e) => setPattern(e.target.value)}>
-          <option value="Array">Array</option>
-          <option value="Two Pointer">Two Pointer</option>
-          <option value="Recursion">Recursion</option>
-          <option value="Other">Other</option>
-        </select>
-        <select
-          value={difficulty}
-          onChange={(e) => setDifficulty(e.target.value)}
-        >
-          <option value="Easy">Easy</option>
-          <option value="Mid">Mid</option>
-          <option value="Mid-Hard">Mid-Hard</option>
-          <option value="Hard">Hard</option>
-        </select>
-
-        <input // input date submitted ke liye kab solve kiya
-          type="date"
-          value={dateSolved}
-          onChange={(e) => setDateSolved(e.target.value)}
-        ></input>
-
-        <button type="submit">Add</button>
-        {pattern === "Other" && (
-          <input
-            type="text"
-            placeholder="Enter new pattern name"
-            value={customPattern}
-            onChange={(e) => setCustomPattern(e.target.value)}
-          />
-        )}
-      </form>
+      <AddProblemForm
+        name={name}
+        setName={setName}
+        pattern={pattern}
+        setPattern={setPattern}
+        difficulty={difficulty}
+        setDifficulty={setDifficulty}
+        dateSolved={dateSolved}
+        setDateSolved={setDateSolved}
+        customPattern={customPattern}
+        setCustomPattern={setCustomPattern}
+        onSubmit={handleAddButton}
+      />
       <select
         value={filterPattern}
         onChange={(e) => setFilterPattern(e.target.value)}
