@@ -8,8 +8,11 @@ function App() {
   const [name, setName] = useState("");
   const [pattern, setPattern] = useState("Array");
   const [difficulty, setDifficulty] = useState("Easy");
-  const [dateSolved, setDateSolved] = useState("");
-
+  const [dateSolved, setDateSolved] = useState(
+    new Date().toISOString().split("T")[0],
+  );
+  const [filterPattern, setFilterPattern] = useState("All");
+  const [customPattern, setCustomPattern] = useState("");
   useEffect(() => {
     const saved = localStorage.getItem("problems");
     if (saved) {
@@ -37,13 +40,15 @@ function App() {
     const newProblem = {
       id: Date.now(),
       name: name,
-      pattern: pattern,
+      pattern: finalPattern,
       difficulty: difficulty,
       dateSolved: dateSolved,
       lastRevised: dateSolved,
     };
 
     setProblems([...problems, newProblem]);
+    setName("");
+    setDateSolved(new Date().toISOString().split("T")[0]);
   }
   function handleDelete(id) {
     setProblems(problems.filter((p) => p.id !== id));
@@ -68,6 +73,12 @@ function App() {
       problems.map((p) => (p.id === id ? { ...p, lastRevised: today } : p)),
     );
   }
+  const finalPattern = pattern === "Other" ? customPattern : pattern;
+  const filteredProblems =
+    filterPattern === "All"
+      ? problems
+      : problems.filter((p) => p.pattern === filterPattern);
+  const uniquePatterns = [...new Set(problems.map((p) => p.pattern))];
   return (
     <div>
       <form onSubmit={handleAddButton}>
@@ -81,6 +92,7 @@ function App() {
           <option value="Array">Array</option>
           <option value="Two Pointer">Two Pointer</option>
           <option value="Recursion">Recursion</option>
+          <option value="Other">Other</option>
         </select>
         <select
           value={difficulty}
@@ -99,8 +111,28 @@ function App() {
         ></input>
 
         <button type="submit">Add</button>
+        {pattern === "Other" && (
+          <input
+            type="text"
+            placeholder="Enter new pattern name"
+            value={customPattern}
+            onChange={(e) => setCustomPattern(e.target.value)}
+          />
+        )}
       </form>
-      {problems.map((p) => (
+      <select
+        value={filterPattern}
+        onChange={(e) => setFilterPattern(e.target.value)}
+      >
+        <option value="All">All</option>
+        {uniquePatterns.map((pat) => (
+          <option key={pat} value={pat}>
+            {pat}
+          </option>
+        ))}
+      </select>
+
+      {filteredProblems.map((p) => (
         <div key={p.id}>
           <button onClick={() => handleDelete(p.id)}>Delete</button>
           <p>{p.name}</p>
