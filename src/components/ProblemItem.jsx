@@ -1,12 +1,18 @@
+import "./ProblemItem.css";
+
 function ProblemItem({ problem, onDelete }) {
   return (
-    <div>
-      <button onClick={() => onDelete(problem.id)}>Delete</button>
-      <p>{problem.name}</p>
-      <p>
-        {problem.pattern}-{problem.difficulty}
-      </p>
-      <p>{problem.dateSolved}</p>
+    <div className="problem-item">
+      <div className="problem-info">
+        <p className="problem-name">{problem.name}</p>
+        <p className="problem-meta">
+          {problem.pattern} - {problem.difficulty}
+        </p>
+        <p className="problem-date">{problem.dateSolved}</p>
+      </div>
+      <button className="delete-btn" onClick={() => onDelete(problem.id)}>
+        Delete
+      </button>
     </div>
   );
 }
