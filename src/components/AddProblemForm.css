@@ -1,0 +1,49 @@
+.add-form {
+  width: 80%;
+  max-width: 500px;
+  margin: 20px auto;
+  background: #241111;
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.form-input,
+.form-select {
+  flex: 1;
+  min-width: 120px;
+  padding: 8px 10px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #3a2416;
+  color: #ffffff;
+  font-size: 13px;
+}
+
+.form-input::placeholder {
+  color: #999;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: #ef9f27;
+}
+
+.form-submit-btn {
+  background: #639922;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.form-submit-btn:hover {
+  background: #4d7a1a;
+}
