@@ -1,0 +1,17 @@
+.filter-dropdown {
+  display: block;
+  width: 80%;
+  max-width: 500px;
+  margin: 0 auto 16px auto;
+  padding: 8px 12px;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #241111;
+  color: #ffffff;
+  font-size: 13px;
+}
+/*.filter-dropdown:focus — ye batata hai "jab filter-dropdown class wale element (yaha dropdown) pe focus ho (matlab user usse click kare ya select kare), tab ye style apply karo*/
+.filter-dropdown:focus {
+  outline: none;
+  border-color: #ef9f27;
+}

@@ -1,6 +1,9 @@
+import "./FilterDropdown.css";
+
 function FilterDropdown({ filterPattern, setFilterPattern, uniquePatterns }) {
   return (
     <select
+      className="filter-dropdown"
       value={filterPattern}
       onChange={(e) => setFilterPattern(e.target.value)}
     >
