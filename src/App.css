@@ -1,0 +1,25 @@
+.light {
+  --bg-color: #eef2f7; /* Halka blue-white background */
+  --card-bg: #fafbfc;
+  --primary-blue: #00baf2; /* Paytm ka signature bright blue (buttons, accents) */
+  --text-color: #1a1a2e; /* Dark navy text */
+  --text-secondary: #6b7280; /* Gray secondary text */
+}
+
+.dark {
+  --bg-color: #0d0d0d;
+  --card-bg: #241111;
+  --primary-color: #639922;
+  --text-color: #ffffff;
+  --text-secondary: #999999;
+}
+
+.dark,
+.light {
+  min-height: 100vh;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background 0.3s,
+    color 0.3s;
+}

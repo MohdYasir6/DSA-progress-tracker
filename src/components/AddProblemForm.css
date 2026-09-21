@@ -2,7 +2,7 @@
   width: 80%;
   max-width: 500px;
   margin: 20px auto;
-  background: #241111;
+  background: var(--card-bg);
   border-radius: 10px;
   padding: 16px;
   display: flex;
@@ -16,15 +16,14 @@
   flex: 1;
   min-width: 120px;
   padding: 8px 10px;
-  border: 1px solid #555;
+
   border-radius: 6px;
-  background: #3a2416;
-  color: #ffffff;
-  font-size: 13px;
+  background: var(--bg-color);
+  color: var(--text-color);
 }
 
 .form-input::placeholder {
-  color: #999;
+  color: var(--text-secondary);
 }
 
 .form-input:focus,

@@ -1,5 +1,5 @@
 .problem-item {
-  background: #241111;
+  background: var(--card-bg);
   padding: 8px 14px;
   border-radius: 8px;
   margin-bottom: 8px;
@@ -22,17 +22,17 @@
 .problem-name {
   font-size: 16px;
   font-weight: 600;
-  color: hwb(0 100% 0%);
+  color: var(--text-color);
 }
 
 .problem-meta {
   font-size: 13px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .problem-date {
   font-size: 12px;
-  color: #999;
+  color: var(--text-secondary);
 }
 .delete-btn {
   background: #e24b4a;

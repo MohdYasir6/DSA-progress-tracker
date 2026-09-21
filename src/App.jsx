@@ -1,9 +1,12 @@
 import { useState, useEffect, useRef } from "react";
+import ThemeToggle from "./components/ThemeToggle";
 import ProblemItem from "./components/ProblemItem";
 import "./App.css";
 import ReviseBox from "./components/ReviseBox";
 import AddProblemForm from "./components/AddProblemForm";
 import FilterDropdown from "./components/FilterDropdown";
+import { useContext } from "react";
+import ThemeContext from "./context/ThemeContext";
 
 function App() {
   const [problems, setProblems] = useState([]);
@@ -16,6 +19,8 @@ function App() {
   );
   const [filterPattern, setFilterPattern] = useState("All");
   const [customPattern, setCustomPattern] = useState("");
+  const { theme } = useContext(ThemeContext);
+
   useEffect(() => {
     const saved = localStorage.getItem("problems");
     if (saved) {
@@ -83,7 +88,8 @@ function App() {
       : problems.filter((p) => p.pattern === filterPattern);
   const uniquePatterns = [...new Set(problems.map((p) => p.pattern))];
   return (
-    <div>
+    <div className={theme}>
+      <ThemeToggle />
       <AddProblemForm
         name={name}
         setName={setName}
