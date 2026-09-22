@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import StatsBar from "./components/StatsBar";
 import ThemeToggle from "./components/ThemeToggle";
 import ProblemItem from "./components/ProblemItem";
 import "./App.css";
@@ -7,7 +8,7 @@ import AddProblemForm from "./components/AddProblemForm";
 import FilterDropdown from "./components/FilterDropdown";
 import { useContext } from "react";
 import ThemeContext from "./context/ThemeContext";
-
+import SearchBar from "./components/SearchBar";
 function App() {
   const [problems, setProblems] = useState([]);
   const isFirstLoad = useRef(true);
@@ -20,7 +21,7 @@ function App() {
   const [filterPattern, setFilterPattern] = useState("All");
   const [customPattern, setCustomPattern] = useState("");
   const { theme } = useContext(ThemeContext);
-
+  const [searchQuery, setSearchQuery] = useState("");
   useEffect(() => {
     const saved = localStorage.getItem("problems");
     if (saved) {
@@ -56,6 +57,7 @@ function App() {
 
     setProblems([...problems, newProblem]);
     setName("");
+    setSearchQuery("");
     setDateSolved(new Date().toISOString().split("T")[0]);
   }
   function handleDelete(id) {
@@ -82,14 +84,23 @@ function App() {
     );
   }
   const finalPattern = pattern === "Other" ? customPattern : pattern;
-  const filteredProblems =
-    filterPattern === "All"
-      ? problems
-      : problems.filter((p) => p.pattern === filterPattern);
+  const filteredProblems = problems
+    .filter((p) => filterPattern === "All" || p.pattern === filterPattern)
+    .filter((p) => p.name.toLowerCase().includes(searchQuery.toLowerCase()));
   const uniquePatterns = [...new Set(problems.map((p) => p.pattern))];
+  const totalProblems = problems.length;
+  const easyCount = problems.filter((p) => p.difficulty === "Easy").length;
+  const midCount = problems.filter((p) => p.difficulty === "Mid").length;
+  const hardCount = problems.filter((p) => p.difficulty === "Hard").length;
   return (
     <div className={theme}>
       <ThemeToggle />
+      <StatsBar
+        totalProblems={totalProblems}
+        easyCount={easyCount}
+        midCount={midCount}
+        hardCount={hardCount}
+      />
       <AddProblemForm
         name={name}
         setName={setName}
@@ -108,12 +119,15 @@ function App() {
         getDaysSince={getDaysSince}
         onMarkRevised={handleMarkRevised}
       />
-      <FilterDropdown
-        filterPattern={filterPattern}
-        setFilterPattern={setFilterPattern}
-        uniquePatterns={uniquePatterns}
-      />
 
+      <div className="search-filter-row">
+        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        <FilterDropdown
+          filterPattern={filterPattern}
+          setFilterPattern={setFilterPattern}
+          uniquePatterns={uniquePatterns}
+        />
+      </div>
       {filteredProblems.map((p) => (
         <ProblemItem key={p.id} problem={p} onDelete={handleDelete} />
       ))}
