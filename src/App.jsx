@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { Routes, Route } from "react-router-dom";
 import StatsBar from "./components/StatsBar";
 import ThemeToggle from "./components/ThemeToggle";
 import ProblemItem from "./components/ProblemItem";
@@ -92,45 +93,59 @@ function App() {
   const easyCount = problems.filter((p) => p.difficulty === "Easy").length;
   const midCount = problems.filter((p) => p.difficulty === "Mid").length;
   const hardCount = problems.filter((p) => p.difficulty === "Hard").length;
+
+  //
   return (
     <div className={theme}>
-      <ThemeToggle />
-      <StatsBar
-        totalProblems={totalProblems}
-        easyCount={easyCount}
-        midCount={midCount}
-        hardCount={hardCount}
-      />
-      <AddProblemForm
-        name={name}
-        setName={setName}
-        pattern={pattern}
-        setPattern={setPattern}
-        difficulty={difficulty}
-        setDifficulty={setDifficulty}
-        dateSolved={dateSolved}
-        setDateSolved={setDateSolved}
-        customPattern={customPattern}
-        setCustomPattern={setCustomPattern}
-        onSubmit={handleAddButton}
-      />
-      <ReviseBox
-        dueProblems={getDueForRivision()}
-        getDaysSince={getDaysSince}
-        onMarkRevised={handleMarkRevised}
-      />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <ThemeToggle />
+              <StatsBar
+                totalProblems={totalProblems}
+                easyCount={easyCount}
+                midCount={midCount}
+                hardCount={hardCount}
+              />
+              <AddProblemForm
+                name={name}
+                setName={setName}
+                pattern={pattern}
+                setPattern={setPattern}
+                difficulty={difficulty}
+                setDifficulty={setDifficulty}
+                dateSolved={dateSolved}
+                setDateSolved={setDateSolved}
+                customPattern={customPattern}
+                setCustomPattern={setCustomPattern}
+                onSubmit={handleAddButton}
+              />
+              <ReviseBox
+                dueProblems={getDueForRivision()}
+                getDaysSince={getDaysSince}
+                onMarkRevised={handleMarkRevised}
+              />
 
-      <div className="search-filter-row">
-        <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        <FilterDropdown
-          filterPattern={filterPattern}
-          setFilterPattern={setFilterPattern}
-          uniquePatterns={uniquePatterns}
+              <div className="search-filter-row">
+                <SearchBar
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                />
+                <FilterDropdown
+                  filterPattern={filterPattern}
+                  setFilterPattern={setFilterPattern}
+                  uniquePatterns={uniquePatterns}
+                />
+              </div>
+              {filteredProblems.map((p) => (
+                <ProblemItem key={p.id} problem={p} onDelete={handleDelete} />
+              ))}
+            </>
+          }
         />
-      </div>
-      {filteredProblems.map((p) => (
-        <ProblemItem key={p.id} problem={p} onDelete={handleDelete} />
-      ))}
+      </Routes>
     </div>
   );
 }
