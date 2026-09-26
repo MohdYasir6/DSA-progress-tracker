@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import About from "./components/About";
+import { Link } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import StatsBar from "./components/StatsBar";
 import ThemeToggle from "./components/ThemeToggle";
@@ -95,8 +97,14 @@ function App() {
   const hardCount = problems.filter((p) => p.difficulty === "Hard").length;
 
   //
+
   return (
     <div className={theme}>
+      <nav style={{ textAlign: "center", padding: "10px" }}>
+        <Link to="/">Home</Link>
+        {" | "}
+        <Link to="/about">About</Link>
+      </nav>
       <Routes>
         <Route
           path="/"
@@ -146,6 +154,7 @@ function App() {
           }
         />
       </Routes>
+      <Route path="/about" element={<About />} />
     </div>
   );
 }
